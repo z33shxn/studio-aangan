@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-bone: var(--bone);
+  --color-ink: var(--ink);
+  --color-stone: var(--stone);
+  --color-stone-2: var(--stone-2);
+  --color-clay: var(--clay);
+  --color-sage: var(--sage);
+  --color-brass: var(--brass);
+
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-fraunces);
+}
+
+:root {
+  --paper: #FBF8F3;
+  --bone: #F3ECE1;
+  --ink: #1C1A17;
+  --stone: #9A8F7E;
+  --stone-2: #C7BCA9;
+  --clay: #B4583B;
+  --sage: #6E7763;
+  --brass: #A98B5D;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--bone);
+  color: var(--ink);
+}
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--stone-2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--stone);
+}
+
+/* Texture classes */
+.bg-grain {
+  position: relative;
+}
+.bg-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/images/textures/paper.png');
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+
+.bg-plaster {
+  position: relative;
+}
+.bg-plaster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/images/textures/plaster.png');
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  z-index: 0;
+}

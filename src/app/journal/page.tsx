@@ -1,7 +1,8 @@
-import Image from "next/image";
+import { SmartImage as Image } from "@/components/ui/SmartImage";
 import Link from "next/link";
 import { posts } from "@/content/posts";
 import { Reveal } from "@/components/motion/Reveal";
+import { DURATION } from "@/lib/motion";
 
 export const metadata = {
   title: "Journal",
@@ -10,7 +11,7 @@ export const metadata = {
 
 export default function JournalPage() {
   return (
-    <div className="flex flex-col pt-24 pb-32">
+    <div className="flex flex-col pt-40 pb-32">
       <div className="container mx-auto px-6 max-w-7xl">
         <Reveal>
           <h1 className="font-serif text-5xl md:text-7xl mb-8">Journal</h1>
@@ -21,7 +22,7 @@ export default function JournalPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {posts.map((post, i) => (
-            <Reveal key={post.slug} delay={i * 0.1}>
+            <Reveal key={post.slug} delay={i  * DURATION.stagger}>
               <Link href={`/journal/${post.slug}`} className="group block">
                 <div className="aspect-[4/3] relative w-full overflow-hidden mb-6 bg-paper/50">
                   <Image

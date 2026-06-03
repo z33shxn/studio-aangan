@@ -4,23 +4,18 @@ import { ReactLenis } from 'lenis/react'
 import { ReactNode, useEffect, useState } from 'react'
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
+  const [useLenis, setUseLenis] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setIsReducedMotion(mediaQuery.matches);
-    
-    const handler = (e: MediaQueryListEvent) => setIsReducedMotion(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    setUseLenis(!reduce && !coarse);
   }, []);
 
-  if (isReducedMotion) {
-    return <>{children}</>;
-  }
+  if (!useLenis) return <>{children}</>;
 
   return (
-    <ReactLenis root options={{ lerp: 0.08, syncTouch: true }}>
+    <ReactLenis root options={{ lerp: 0.08 }}>
       {children}
     </ReactLenis>
   )

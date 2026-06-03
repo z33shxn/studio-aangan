@@ -1,8 +1,9 @@
-import Image from "next/image";
+import { SmartImage as Image } from "@/components/ui/SmartImage";
 import { studio } from "@/content/studio";
 import { Reveal } from "@/components/motion/Reveal";
 import { ClipReveal } from "@/components/motion/ClipReveal";
 import { Parallax } from "@/components/motion/Parallax";
+import { DURATION } from "@/lib/motion";
 
 export const metadata = {
   title: "Studio",
@@ -11,7 +12,7 @@ export const metadata = {
 
 export default function StudioPage() {
   return (
-    <div className="flex flex-col pt-24 pb-32">
+    <div className="flex flex-col pt-40 pb-32">
       <div className="container mx-auto px-6 max-w-7xl">
         <Reveal>
           <h1 className="font-serif text-5xl md:text-7xl mb-8">About the Studio</h1>
@@ -23,7 +24,7 @@ export default function StudioPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-32">
           {studio.founders.map((founder, i) => (
             <div key={founder.name} className="flex flex-col">
-              <ClipReveal delay={i * 0.2}>
+              <>
                 <div className="aspect-[4/5] relative w-full overflow-hidden mb-6 bg-paper/50">
                   <Image
                     src={founder.image}
@@ -33,8 +34,8 @@ export default function StudioPage() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
-              </ClipReveal>
-              <Reveal delay={0.2 + i * 0.2}>
+              </>
+              <Reveal delay={0.1 + i  * DURATION.stagger}>
                 <h3 className="font-serif text-3xl mb-1">{founder.name}</h3>
                 <p className="text-xs uppercase tracking-widest text-brass font-medium mb-4">{founder.role}</p>
                 <p className="text-ink/70 leading-relaxed">{founder.bio}</p>
@@ -51,7 +52,7 @@ export default function StudioPage() {
           {studio.philosophy.map((item, i) => (
             <div key={item.title} className={`flex flex-col gap-12 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
               <div className="w-full md:w-1/2">
-                <ClipReveal>
+                <>
                   <div className="aspect-[4/3] relative w-full overflow-hidden bg-paper/50">
                     <Parallax offset={20}>
                       <Image
@@ -63,7 +64,7 @@ export default function StudioPage() {
                       />
                     </Parallax>
                   </div>
-                </ClipReveal>
+                </>
               </div>
               <div className="w-full md:w-1/2 flex flex-col justify-center px-0 md:px-12">
                 <Reveal>

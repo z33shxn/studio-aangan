@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-export function Marquee({ children, className = "", speed = 30 }: { children: ReactNode; className?: string; speed?: number }) {
+export function Marquee({ children, className = "", speed = 40 }: { children: ReactNode; className?: string; speed?: number }) {
   const shouldReduceMotion = useReducedMotion();
 
   if (shouldReduceMotion) {

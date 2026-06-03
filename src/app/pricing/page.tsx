@@ -1,22 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { pricing } from "@/content/pricing";
+import Link from "next/link";
+import { pricing, City, PackageType } from "@/content/pricing";
 import { Reveal } from "@/components/motion/Reveal";
 import { Check } from "lucide-react";
+import { formatINR } from "@/lib/format";
+import { Button } from "@/components/ui/Button";
+import { DURATION } from "@/lib/motion";
 
 export default function PricingPage() {
   const [area, setArea] = useState<number>(1200);
-  const [city, setCity] = useState<string>("Bengaluru");
-  const [packageType, setPackageType] = useState<string>("Signature");
+  const [city, setCity] = useState<City>("Bengaluru");
+  const [packageType, setPackageType] = useState<PackageType>("Signature");
 
-  const cities = Object.keys(pricing.calculatorBands);
-  // @ts-ignore
-  const baseRate = pricing.calculatorBands[city][packageType];
+  const cities = Object.keys(pricing.calculatorBands) as City[];
+  const baseRate = pricing.calculatorBands[city]?.[packageType] || 0;
   const estimate = area * baseRate;
 
   return (
-    <div className="flex flex-col pt-24 pb-32">
+    <div className="flex flex-col pt-40 pb-32">
       <div className="container mx-auto px-6 max-w-7xl">
         <Reveal>
           <h1 className="font-serif text-5xl md:text-7xl mb-8">Pricing</h1>
@@ -27,7 +30,7 @@ export default function PricingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
           {pricing.packages.map((pkg, i) => (
-            <Reveal key={pkg.name} delay={i * 0.1} className={`flex flex-col p-8 border ${pkg.popular ? 'border-brass bg-bone' : 'border-ink/10'}`}>
+            <Reveal key={pkg.name} delay={i  * DURATION.stagger} className={`flex flex-col p-8 border ${pkg.popular ? 'border-brass bg-bone' : 'border-ink/10'}`}>
               {pkg.popular && <span className="text-[10px] uppercase tracking-widest font-medium text-brass mb-4 block">Most Popular</span>}
               <h3 className="font-serif text-3xl mb-2">{pkg.name}</h3>
               <p className="text-ink/70 mb-6 italic">{pkg.tagline}</p>
@@ -75,7 +78,7 @@ export default function PricingPage() {
                     <label className="block text-sm uppercase tracking-widest font-medium text-paper/70 mb-4">City</label>
                     <select 
                       value={city} 
-                      onChange={(e) => setCity(e.target.value)}
+                      onChange={(e) => setCity(e.target.value as City)}
                       className="w-full bg-transparent border-b border-paper/20 pb-2 text-lg focus:outline-none focus:border-brass cursor-pointer"
                     >
                       {cities.map(c => <option key={c} value={c} className="bg-ink text-paper">{c}</option>)}
@@ -85,7 +88,7 @@ export default function PricingPage() {
                     <label className="block text-sm uppercase tracking-widest font-medium text-paper/70 mb-4">Package</label>
                     <select 
                       value={packageType} 
-                      onChange={(e) => setPackageType(e.target.value)}
+                      onChange={(e) => setPackageType(e.target.value as PackageType)}
                       className="w-full bg-transparent border-b border-paper/20 pb-2 text-lg focus:outline-none focus:border-brass cursor-pointer"
                     >
                       {pricing.packages.map(p => <option key={p.name} value={p.name} className="bg-ink text-paper">{p.name}</option>)}
@@ -96,10 +99,15 @@ export default function PricingPage() {
 
               <div className="md:col-span-5 bg-paper/5 p-8 flex flex-col justify-center">
                 <p className="text-sm uppercase tracking-widest text-paper/60 mb-2">Estimated Cost</p>
-                <div className="font-serif text-5xl md:text-6xl text-brass mb-4">
-                  ₹{new Intl.NumberFormat('en-IN').format(estimate)}
+                <div data-testid="price-estimate" className="font-serif text-5xl md:text-6xl text-brass mb-4">
+                  {estimate > 0 ? formatINR(estimate) : "—"}
                 </div>
-                <p className="text-xs text-paper/40">{pricing.note}</p>
+                <p className="text-xs text-paper/40 mb-8">{pricing.note}</p>
+                <Button asChild variant="outline" className="w-full border-paper/20 text-paper hover:bg-paper hover:text-ink">
+                  <Link href={`/contact?area=${area}&city=${city}&package=${packageType}`}>
+                    Get an exact quote
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

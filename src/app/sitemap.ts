@@ -2,11 +2,18 @@ import { MetadataRoute } from 'next';
 import { projects } from '@/content/projects';
 import { services } from '@/content/services';
 import { posts } from '@/content/posts';
+import { citySlugMap } from '@/content/locations';
 
-const baseUrl = 'https://studioaangan.com';
+import { SITE_URL } from '@/lib/site';
 
+const baseUrl = SITE_URL;
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ['', '/studio', '/services', '/portfolio', '/before-after', '/pricing', '/journal', '/contact'].map(
+  const routes = [
+    '', '/studio', '/services', '/portfolio', '/before-after', 
+    '/pricing', '/journal', '/contact', '/team', '/process', 
+    '/careers', '/press', '/privacy', '/terms', '/faq', 
+    '/testimonials', '/locations'
+  ].map(
     (route) => ({
       url: `${baseUrl}${route}`,
       lastModified: new Date(),
@@ -36,5 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...routes, ...projectRoutes, ...serviceRoutes, ...postRoutes];
+  const locationRoutes = Object.keys(citySlugMap).map((slug) => ({
+    url: `${baseUrl}/locations/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
+  return [...routes, ...projectRoutes, ...serviceRoutes, ...postRoutes, ...locationRoutes];
 }

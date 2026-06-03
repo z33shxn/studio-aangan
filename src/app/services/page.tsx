@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SmartImage as Image } from "@/components/ui/SmartImage";
 import Link from "next/link";
 import { services } from "@/content/services";
 import { Reveal } from "@/components/motion/Reveal";
@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function ServicesPage() {
   return (
-    <div className="flex flex-col pt-24 pb-32">
+    <div className="flex flex-col pt-40 pb-32">
       <div className="container mx-auto px-6 max-w-7xl">
         <Reveal>
           <h1 className="font-serif text-5xl md:text-7xl mb-8">Services</h1>
@@ -25,7 +25,7 @@ export default function ServicesPage() {
           {services.map((service, i) => (
             <div key={service.slug} className={`flex flex-col gap-12 lg:gap-16 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'}`} id={service.slug}>
               <div className="w-full md:w-1/2">
-                <ClipReveal>
+                <>
                   <Link href={`/services/${service.slug}`} className="block relative w-full aspect-[4/3] overflow-hidden bg-paper/50 group" data-cursor="View">
                     <Image
                       src={service.image}
@@ -35,7 +35,7 @@ export default function ServicesPage() {
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </Link>
-                </ClipReveal>
+                </>
               </div>
               <div className="w-full md:w-1/2 flex flex-col justify-center px-0 lg:px-12">
                 <Reveal>

@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Studio Aangan
 
-## Getting Started
+A modern, high-performance web application for Studio Aangan, an interior design and architecture studio based in Bengaluru.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Framework**: Next.js 16 (App Router)
+- **UI Library**: React 19
+- **Styling**: Tailwind CSS 4
+- **Animations**: Framer Motion
+- **Smooth Scroll**: Lenis
+- **Package Manager**: pnpm
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup & Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Environment Variables**:
+   Copy `.env.example` to `.env.local` and populate the optional keys:
+   - `NEXT_PUBLIC_SITE_URL`: Canonical URL (e.g. `https://studioaangan.in` or preview URL) for OG images and sitemap.
+   - `RESEND_API_KEY`: API key for email delivery via Resend.
+   - `CONTACT_TO_EMAIL`: Destination email address for inquiries.
+   - `NEXT_PUBLIC_ANALYTICS`: Set to `1` to enable Vercel Analytics and Speed Insights.
 
-## Learn More
+3. **Run Development Server**:
+   ```bash
+   pnpm dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+## Production QA Sweep
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To verify that the application passes all internal quality metrics (zero console errors, layout shift < 0.05, no stranded images, etc.):
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Build the application**:
+   ```bash
+   pnpm build
+   ```
 
-## Deploy on Vercel
+2. **Run the production server and QA script**:
+   ```bash
+   pnpm start
+   # In a separate terminal window:
+   node scripts/qa-sweep.mjs
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This application is ready to be deployed to Vercel out of the box.
+
+1. **Import via Vercel**: Connect the GitHub repository in the Vercel dashboard. The framework will be automatically detected as Next.js.
+2. **Environment Variables**: Ensure `NEXT_PUBLIC_SITE_URL` is set to the production URL in the Vercel project settings to guarantee correct canonical URLs and OpenGraph images.
+
+All features (including the contact form and analytics) degrade gracefully if their respective environment variables are omitted.

@@ -1,4 +1,19 @@
-export const pricing = {
+export type PackageType = "Essential" | "Signature" | "Bespoke";
+export type City = "Bengaluru" | "Hyderabad" | "Pune" | "Chennai" | "Kochi";
+
+export interface PricingData {
+  packages: Array<{
+    name: PackageType;
+    tagline: string;
+    price: string;
+    features: string[];
+    popular: boolean;
+  }>;
+  calculatorBands: Record<City, Record<PackageType, number>>;
+  note: string;
+}
+
+export const pricing: PricingData = {
   packages: [
     {
       name: "Essential",

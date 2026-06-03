@@ -11,7 +11,7 @@ export default function BeforeAfterPage() {
   const transformedProjects = projects.filter(p => p.beforeAfter);
 
   return (
-    <div className="flex flex-col pt-24 pb-32">
+    <div className="flex flex-col pt-40 pb-32">
       <div className="container mx-auto px-6 max-w-7xl">
         <Reveal>
           <h1 className="font-serif text-5xl md:text-7xl mb-8">Transformations</h1>

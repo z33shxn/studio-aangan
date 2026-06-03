@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
+import { SmartImage as Image } from "@/components/ui/SmartImage";
 import Link from "next/link";
 import { services } from "@/content/services";
 import { Reveal } from "@/components/motion/Reveal";
@@ -12,14 +12,16 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const service = services.find((s) => s.slug === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
   if (!service) return { title: "Not Found" };
   return { title: `${service.name} | Services` };
 }
 
-export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
-  const service = services.find((s) => s.slug === params.slug);
+export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
   
   if (!service) {
     notFound();

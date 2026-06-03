@@ -14,8 +14,8 @@ export function Parallax({ children, className = "", offset = 50 }: { children: 
   const y = useTransform(scrollYProgress, [0, 1], [-offset, offset]);
 
   return (
-    <div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.div style={{ y: shouldReduceMotion ? 0 : y, height: "100%", width: "100%" }}>
+    <div ref={ref} className={`overflow-hidden relative h-full w-full ${className}`}>
+      <motion.div style={{ y: shouldReduceMotion ? 0 : y }} className="relative h-full w-full">
         {children}
       </motion.div>
     </div>

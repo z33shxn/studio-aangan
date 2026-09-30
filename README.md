@@ -1,6 +1,21 @@
 # Studio Aangan
 
-A modern, high-performance web application for Studio Aangan, an interior design and architecture studio based in Bengaluru.
+A fast, editorial website for an interior design and architecture studio in Bengaluru, with a built-in **interior design cost estimator**.
+
+> **Concept build.** A portfolio project. The studio, its team, projects, testimonials and prices are fictional.
+
+## Highlights
+
+- **Cost estimator (`/pricing`)**: pick a city (Bengaluru, Hyderabad, Pune, Chennai, Kochi) and a package (Essential, Signature, Bespoke), enter the carpet area, and the page multiplies the area by that city and package's per-square-foot rate to give an instant estimate. One click carries the area, city and package into a pre-filled quote request on the contact page.
+- **20 routes**, covering:
+  - studio and team
+  - process, services and service pages
+  - portfolio with case studies, and before/after comparisons
+  - journal and posts, locations and city pages
+  - testimonials, press, careers and FAQ
+  - pricing, contact, privacy and terms
+- **Production QA**: a scripted sweep (`scripts/qa-sweep.mjs`) checks for zero console errors, layout shift under 0.05 and no stranded images. A Lighthouse report is included.
+- **Graceful degradation**: the contact form and analytics switch off cleanly when their environment variables are missing.
 
 ## Tech Stack
 
